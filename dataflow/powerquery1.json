@@ -1,0 +1,19 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "landedCustomer",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  landedCustomer",
+					"dataset": {
+						"referenceName": "landedCustomer",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"sinks": []
+		}
+	}
+}
