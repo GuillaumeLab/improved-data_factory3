@@ -29,7 +29,14 @@
 			{
 				"name": "Power Query1",
 				"type": "ExecuteWranglingDataflow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "GroupBy Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "1.00:00:00",
 					"retry": 0,
