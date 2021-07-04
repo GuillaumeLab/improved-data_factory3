@@ -1,0 +1,92 @@
+{
+    "name": "landed2cleaned",
+    "properties": {
+        "activities": [
+            {
+                "name": "Ingest Customer Data",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Check if file received",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Ingestion",
+                    "baseParameters": {
+                        "partition_folder": {
+                            "value": "@concat('ingestdatetime=',formatDateTime(utcnow(),'yyyyMMdd'))",
+                            "type": "Expression"
+                        }
+                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureDatabricks1",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "Check if file received",
+                "type": "ExecutePipeline",
+                "dependsOn": [],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "landed_check",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "partition": {
+                            "value": "@formatDateTime(utcnow(),'yyyyMMdd')",
+                            "type": "Expression"
+                        },
+                        "subfolder_path": "customer/fr/"
+                    }
+                }
+            },
+            {
+                "name": "Send Email Notification",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Ingest Customer Data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "email notification",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "from": "glabarre@dxc.com",
+                        "to": "glabarre@dxc.com",
+                        "cc": "glabarre@dxc.com",
+                        "bcc": "glabarre@dxc.com",
+                        "subject": "Customer is loaded",
+                        "body": "Dear,<br><br> With this email we want to inform you that the store cockpit is loaded and contains the data up to and including yesterday.<br><br> Best Regards,<br> Business Intelligence<br>"
+                    }
+                }
+            }
+        ],
+        "concurrency": 1,
+        "annotations": [],
+        "lastPublishTime": "2021-07-04T14:49:18Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

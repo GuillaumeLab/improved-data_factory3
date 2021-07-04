@@ -1,0 +1,60 @@
+{
+    "name": "landedCustomer",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureBlobStorage1",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "folderPartition": {
+                "type": "string"
+            },
+            "subfolder": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "fileName": {
+                    "value": "@concat('customers_',formatDateTime(utcnow(),'yyyyMMdd'),'.csv')",
+                    "type": "Expression"
+                },
+                "folderPath": {
+                    "value": "@concat('landed/',dataset().subfolder,'ingestdatetime=',dataset().folderPartition)",
+                    "type": "Expression"
+                },
+                "container": "containerdxctest"
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": [
+            {
+                "name": "CustomerID",
+                "type": "String"
+            },
+            {
+                "name": "Genre",
+                "type": "String"
+            },
+            {
+                "name": "Age",
+                "type": "String"
+            },
+            {
+                "name": "Address",
+                "type": "String"
+            },
+            {
+                "name": "effectiveDate",
+                "type": "String"
+            }
+        ]
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

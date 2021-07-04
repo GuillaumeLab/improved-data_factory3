@@ -1,0 +1,65 @@
+{
+    "name": "email notification",
+    "properties": {
+        "activities": [
+            {
+                "name": "Trigger Logic App",
+                "type": "WebActivity",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "url": "https://prod-48.northeurope.logic.azure.com:443/workflows/9b38f6dc2bdf4a9a99f38107cc1f28cc/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BMbLD2OIJrTNVLp_BGKDuaDIa0ktBPbbOcJgc7uhXIQ",
+                    "method": "POST",
+                    "body": {
+                        "value": "@concat('\n{\n\n    \"from\": \"',pipeline().parameters.from,'\",\n    \"to\": \"',pipeline().parameters.to,'\",\n    \"cc\": \"\",\n    \"bcc\": \"',pipeline().parameters.bcc,'\",\n    \"subject\": \"',pipeline().parameters.subject,'\",\n    \"body\": \"',pipeline().parameters.body,'\"\n\n}\n')",
+                        "type": "Expression"
+                    }
+                }
+            }
+        ],
+        "parameters": {
+            "from": {
+                "type": "string",
+                "defaultValue": "glabarre@dxc.com"
+            },
+            "to": {
+                "type": "string",
+                "defaultValue": "glabarre@dxc.com"
+            },
+            "cc": {
+                "type": "string",
+                "defaultValue": "glabarre@dxc.com"
+            },
+            "bcc": {
+                "type": "string",
+                "defaultValue": "glabarre@dxc.com"
+            },
+            "subject": {
+                "type": "string",
+                "defaultValue": "Customer is loaded"
+            },
+            "body": {
+                "type": "string",
+                "defaultValue": "Dear,<br><br> With this email we want to inform you that the customer is loaded and contains the data up to and including yesterday.<br><br> Best Regards,<br> Business Intelligence<br>"
+            }
+        },
+        "variables": {
+            "request": {
+                "type": "String"
+            }
+        },
+        "folder": {
+            "name": "Helpers"
+        },
+        "annotations": [],
+        "lastPublishTime": "2021-07-04T09:59:30Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
