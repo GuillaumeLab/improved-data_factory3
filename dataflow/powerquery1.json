@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"name": "landedCustomer",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  landedCustomer",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tpartitionBy('hash', 1)) ~>  landedCustomer",
 					"dataset": {
 						"referenceName": "landedCustomer",
 						"type": "DatasetReference"
