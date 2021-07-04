@@ -1,5 +1,5 @@
 {
-	"name": "GroupBy Customer",
+	"name": "groupByCustomer",
 	"properties": {
 		"activities": [
 			{
