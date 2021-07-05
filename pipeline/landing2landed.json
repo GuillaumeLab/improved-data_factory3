@@ -78,7 +78,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@startsWith(pipeline().parameters.fileName, item().SourceFilename)",
+									"value": "@startsWith(pipeline().parameters.fileName, json(variables('table')).SourceFilename)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
