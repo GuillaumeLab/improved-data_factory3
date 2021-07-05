@@ -1,28 +1,28 @@
 {
-    "name": "trigger1",
-    "properties": {
-        "annotations": [],
-        "runtimeState": "Started",
-        "pipelines": [
-            {
-                "pipelineReference": {
-                    "referenceName": "landing2landed",
-                    "type": "PipelineReference"
-                },
-                "parameters": {
-                    "fileName": "@triggerBody().fileName"
-                }
-            }
-        ],
-        "type": "BlobEventsTrigger",
-        "typeProperties": {
-            "blobPathBeginsWith": "/containerdxctest/blobs/landing/",
-            "blobPathEndsWith": ".csv",
-            "ignoreEmptyBlobs": true,
-            "scope": "/subscriptions/b7517f4c-6666-4a25-ac4c-43bbb9cfa983/resourceGroups/MLAzure_RG/providers/Microsoft.Storage/storageAccounts/dxcdemodatafactory001",
-            "events": [
-                "Microsoft.Storage.BlobCreated"
-            ]
-        }
-    }
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "landing2landed",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"fileName": "@triggerBody().fileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/containerdxctest/blobs/landing/",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/b7517f4c-6666-4a25-ac4c-43bbb9cfa983/resourceGroups/MLAzure_RG/providers/Microsoft.Storage/storageAccounts/dxcdemodatafactory001",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
 }

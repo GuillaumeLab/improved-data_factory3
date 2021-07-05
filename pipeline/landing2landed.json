@@ -52,24 +52,11 @@
 					},
 					"activities": [
 						{
-							"name": "parse json",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "table",
-								"value": {
-									"value": "@string(item())",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "If Condition1",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "parse json",
+									"activity": "DestinationFolder",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -78,7 +65,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@startsWith(pipeline().parameters.fileName, json(variables('table')).SourceFilename)",
+									"value": "@startsWith(pipeline().parameters.fileName, item().SourceFilename)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -87,7 +74,7 @@
 										"type": "Copy",
 										"dependsOn": [
 											{
-												"activity": "ingest date",
+												"activity": "DestinationFolder_copy1",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -169,8 +156,55 @@
 												"type": "Expression"
 											}
 										}
+									},
+									{
+										"name": "DestinationFolder_copy1",
+										"type": "SetVariable",
+										"dependsOn": [
+											{
+												"activity": "parse json",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "DestinationFolder",
+											"value": "@json(variables('table')).DestinationFolder"
+										}
+									},
+									{
+										"name": "parse json",
+										"type": "SetVariable",
+										"dependsOn": [
+											{
+												"activity": "ingest date",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "table",
+											"value": {
+												"value": "@string(item())",
+												"type": "Expression"
+											}
+										}
 									}
 								]
+							}
+						},
+						{
+							"name": "DestinationFolder",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "DestinationFolder",
+								"value": "@json(variables('table')).DestinationFolder"
 							}
 						}
 					]
@@ -193,6 +227,9 @@
 				"type": "Array"
 			},
 			"newvar": {
+				"type": "String"
+			},
+			"DestinationFolder": {
 				"type": "String"
 			}
 		},
