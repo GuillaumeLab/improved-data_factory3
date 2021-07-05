@@ -61,8 +61,33 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GroupBy Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "logs",
+					"value": {
+						"value": "@activity('GroupBy Customer').output.runStatus.metrics.outputsink.rowsWritten",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"logs": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
