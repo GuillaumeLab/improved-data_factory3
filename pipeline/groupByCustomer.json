@@ -63,7 +63,8 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "some logs",
+				"description": "https://docs.microsoft.com/fr-fr/azure/data-factory/control-flow-execute-data-flow-activity",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
