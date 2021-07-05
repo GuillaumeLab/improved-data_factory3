@@ -54,14 +54,7 @@
 						{
 							"name": "If Condition1",
 							"type": "IfCondition",
-							"dependsOn": [
-								{
-									"activity": "DestinationFolder",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
@@ -74,7 +67,7 @@
 										"type": "Copy",
 										"dependsOn": [
 											{
-												"activity": "DestinationFolder_copy1",
+												"activity": "DestinationFolder",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -158,7 +151,7 @@
 										}
 									},
 									{
-										"name": "DestinationFolder_copy1",
+										"name": "DestinationFolder",
 										"type": "SetVariable",
 										"dependsOn": [
 											{
@@ -195,16 +188,6 @@
 										}
 									}
 								]
-							}
-						},
-						{
-							"name": "DestinationFolder",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "DestinationFolder",
-								"value": "@json(variables('table')).DestinationFolder"
 							}
 						}
 					]
