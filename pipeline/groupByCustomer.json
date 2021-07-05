@@ -42,7 +42,7 @@
 				"typeProperties": {
 					"variableName": "logs",
 					"value": {
-						"value": "@int(activity('GroupBy Customer').output.runStatus.metrics.outputsink.rowsWritten)",
+						"value": "@string(activity('GroupBy Customer').output.runStatus.metrics.outputsink.rowsWritten)",
 						"type": "Expression"
 					}
 				}
