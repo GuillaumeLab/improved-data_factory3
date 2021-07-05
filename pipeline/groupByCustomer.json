@@ -1,0 +1,58 @@
+{
+	"name": "groupByCustomer",
+	"properties": {
+		"activities": [
+			{
+				"name": "GroupBy Customer",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "01:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "some logs",
+				"description": "https://docs.microsoft.com/fr-fr/azure/data-factory/control-flow-execute-data-flow-activity",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GroupBy Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "logs",
+					"value": {
+						"value": "@string(activity('GroupBy Customer').output.runStatus.metrics.outputsink.rowsWritten)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"logs": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

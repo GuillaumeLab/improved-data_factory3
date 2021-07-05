@@ -1,0 +1,20 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "Powerquery_dataset",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Powerquery_dataset",
+					"dataset": {
+						"referenceName": "Powerquery_dataset",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"sinks": [],
+			"script": "section Section1;\r\nshared Powerquery_dataset = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://dxcdemodatafactory001.blob.core.windows.net/containerdxctest/landed/customer/fr/ingestdatetime=20210704/customers_20210704.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = Powerquery_dataset\r\nin\r\n  #\"Transposed table\";\r\n"
+		}
+	}
+}

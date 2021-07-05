@@ -1,0 +1,41 @@
+{
+	"name": "powerquery",
+	"properties": {
+		"activities": [
+			{
+				"name": "powerquery1",
+				"type": "ExecuteWranglingDataflow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "powerquery1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"sinks": {
+						"UserQuery": {
+							"name": "Sinkoutput",
+							"dataset": {
+								"referenceName": "output",
+								"type": "DatasetReference"
+							},
+							"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcustomerID as string,\n\t\tGenre as string,\n\t\tAge as string,\n\t\taddress as string,\n\t\teffectiveDate as string\n\t),\n\tpartitionFileNames:['outputpowerquery.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> Sinkoutput"
+						}
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
