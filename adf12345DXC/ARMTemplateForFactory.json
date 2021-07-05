@@ -607,6 +607,10 @@
 				"parameters": {
 					"fileName": {
 						"type": "string"
+					},
+					"env ": {
+						"type": "string",
+						"defaultValue": "dev "
 					}
 				},
 				"variables": {
