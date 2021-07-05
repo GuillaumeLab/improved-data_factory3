@@ -164,7 +164,10 @@
 										"userProperties": [],
 										"typeProperties": {
 											"variableName": "DestinationFolder",
-											"value": "@json(variables('table')).DestinationFolder"
+											"value": {
+												"value": "@json(variables('table')).DestinationFolder",
+												"type": "Expression"
+											}
 										}
 									},
 									{
@@ -197,6 +200,10 @@
 		"parameters": {
 			"fileName": {
 				"type": "string"
+			},
+			"env ": {
+				"type": "string",
+				"defaultValue": "dev "
 			}
 		},
 		"variables": {
