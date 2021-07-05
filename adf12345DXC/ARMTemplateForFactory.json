@@ -251,6 +251,34 @@
 								"body": "Dear,<br><br> With this email we want to inform you that the store cockpit is loaded and contains the data up to and including yesterday.<br><br> Best Regards,<br> Business Intelligence<br>"
 							}
 						}
+					},
+					{
+						"name": "Send Email Notification Failure",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Ingest Customer Data",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "email notification",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"from": "glabarre@dxc.com",
+								"to": "glabarre@dxc.com",
+								"cc": "glabarre@dxc.com",
+								"bcc": "glabarre@dxc.com",
+								"subject": "Customer is loaded",
+								"body": "Dear,<br><br> With this email we want to inform you that the store cockpit is loaded and contains the data up to and including yesterday.<br><br> Best Regards,<br> Business Intelligence<br>"
+							}
+						}
 					}
 				],
 				"concurrency": 1,
